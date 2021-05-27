@@ -1,28 +1,51 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
-import {deleteTodo, updateTodo } from '../../store/todoSlice';
+import { useSelector, useDispatch} from 'react-redux';
+import {clearTodos, todoAdapter, todoSelectors, restoreTodo} from '../../store/todoSlice';
+import Todo from './Todo';
 
-const Todo = ({ text, completed, id}) => {
+const TodoList = () => {
     const dispatch=useDispatch();
+    const allTodos = useSelector(todoSelectors.selectEntities)
+    const todoCount= useSelector(todoSelectors.selectTotal);
+    const deletedTodos= useSelector(state => state.todos.deletedTodos);
 
-    const toggle = () => {
-        dispatch(updateTodo({
-            id: id,
-            changes: {completed: !completed}
-        }))
+    const todoList=[];
+    for (const id in allTodos) {
+        if (Object.hasOwnProperty.call(allTodos,id)) {
+            const todoItem = allTodos[id];
+            todoList.push(
+                <Todo
+                    key={todoItem.id}
+                    id={todoItem.id}
+                    completed={todoItem.completed}
+                    text={todoItem.text}
+                />
+            );
+        }
+    }
 
+    const restore = (restoreitem) => {
+        dispatch(restoreTodo(restoreitem));
     };
-    const deleteItem = () => {
-        dispatch(deleteTodo(id));
-    };
 
+    const deleteList = deletedTodos.map(item => (<div> 
+        <span> {item.text}</span>
+        <button id="restore-btn" onClick={() => restore(item)}>Restore</button>
+    </div>
+    ));
     return (
-        <div className='todo'>
-            <input type='checkbox' value={completed} onChange={toggle} />
-            <span>{text}</span>
-            <button onClick={deleteItem}>x</button>
+        <div className='todo-list'>
+            <h3>Your activities:</h3>
+            <h4>Count: {todoCount}</h4>
+            <button className='delete-btn' onClick={() => {
+                dispatch(clearTodos());}} >
+                Clear All activities
+            </button>
+            <div> {todoList}</div>
+            <h3>Deleted activities:</h3>
+            <div>{deleteList}</div>
         </div>
     )
 }
 
-export default Todo;
+export default TodoList;
