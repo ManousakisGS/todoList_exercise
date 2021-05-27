@@ -30,19 +30,19 @@ const TodoList = () => {
 
     const deleteList = deletedTodos.map(item => (<div> 
         <span> {item.text}</span>
-        <button onClick={() => restore(item)}>Restore</button>
+        <button id="restore-btn" onClick={() => restore(item)}>Restore</button>
     </div>
     ));
     return (
         <div className='todo-list'>
-            <h3>Your ToDos:</h3>
+            <h3>Your activities:</h3>
             <h4>Count: {todoCount}</h4>
             <button className='delete-btn' onClick={() => {
                 dispatch(clearTodos());}} >
-                Clear All ToDos
+                Clear All activities
             </button>
             <div> {todoList}</div>
-            <h3>Deleted todos:</h3>
+            <h3>Deleted activities:</h3>
             <div>{deleteList}</div>
         </div>
     )
