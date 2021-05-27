@@ -1,15 +1,18 @@
+import React, {Component} from 'react';
 import './App.css';
 import AddTodo from './components/AddTodo/AddTodo'
 import TodoList from './components/TodoList/TodoList'
 
-function App(){
+class App extends Component {
+  render() {
   return (
     <div className='App'>
-      <h1 className='header'> Activities toDoList </h1>
+      <h1 className='header'> To-Do List of Activities </h1>
       <AddTodo/>
       <TodoList/>
     </div>
   );
+}
 }
 
 export default App;
