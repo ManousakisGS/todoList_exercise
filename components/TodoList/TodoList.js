@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch} from 'react-redux';
-import {clearTodos, todoAdapter, todoSelectors, restoreTodo} from '../../store/todoSlice';
+import {clearTodos, todoSelectors, restoreTodo} from '../../store/todoSlice';
 import Todo from './Todo';
 
 const TodoList = () => {
@@ -28,7 +28,7 @@ const TodoList = () => {
         dispatch(restoreTodo(restoreitem));
     };
 
-    const deleteList = deletedTodos.map(item => (<div> 
+    const deleteList = deletedTodos.map(item => (<div key={item.id}> 
         <span> {item.text}</span>
         <button id="restore-btn" onClick={() => restore(item)}>Restore</button>
     </div>
@@ -47,5 +47,6 @@ const TodoList = () => {
         </div>
     )
 }
+
 
 export default TodoList;
