@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import {useDispatch} from 'react-redux';
 import { addTodos} from '../../store/todoSlice';
 import {nanoid} from '@reduxjs/toolkit';
@@ -52,7 +52,7 @@ const AddTodo = () => {
                 <i>eg: reading, eating, coding, hiking</i>
             </p>
             </div>
-            <input id="clear-text" placeholder="Type here:" onfocus="this.placeholder = ''" value={text} onChange={(e) => setText(e.target.value)} />
+            <input id="clear-text" placeholder="Type here:" value={text} onChange={(e) => setText(e.target.value)} />
             <button onClick={submit}>Add activity</button>
             <button id="fetch" onClick={fetchData}>Fetch data</button>
         </div>
