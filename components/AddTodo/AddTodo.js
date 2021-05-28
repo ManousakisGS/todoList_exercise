@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import { addTodos} from '../../store/todoSlice';
 import {nanoid} from '@reduxjs/toolkit';
@@ -21,6 +21,29 @@ const AddTodo = () => {
         setText('');
     };
 
+
+
+        const fetchData = () => {
+            // fetch data from URL
+            
+        /* fetch(`http://www.json-generator.com/api/json/get/ckKUlHqBiW?indent=2`)  */
+
+        //fetch data from JSON file in public folder.
+
+        fetch('data.json') 
+        .then((res) => res.json())
+        .then((data) => {
+        let html='';
+        for (let i = 0; i < data.entities.length; i++) {
+             html+=data.entities[i]["text"];
+             if ((i+1)<data.entities.length) html+=',';
+          }
+        document.getElementById('clear-text').value=html;
+        setText(html);
+        });
+        }
+
+
     return (
         <div className='add-todo'>
             <div >
@@ -31,6 +54,7 @@ const AddTodo = () => {
             </div>
             <input id="clear-text" placeholder="Type here:" onfocus="this.placeholder = ''" value={text} onChange={(e) => setText(e.target.value)} />
             <button onClick={submit}>Add activity</button>
+            <button id="fetch" onClick={fetchData}>Fetch data</button>
         </div>
     );
 };
